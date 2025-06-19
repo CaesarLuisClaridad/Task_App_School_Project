@@ -54,6 +54,7 @@ form h2 {
   display: flex;
   align-items: center;
   background-color: var(--input-bg);
+  box-shadow: 3px 2px 5px rgba(22, 9, 206, 0.2);
   border-radius: var(--radius);
   padding: 0.6rem 1rem;
   margin-bottom: 1rem;
@@ -86,7 +87,7 @@ form h2 {
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
   margin-bottom: 0.8rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  box-shadow: 3px 2px 5px rgba(22, 9, 206, 0.1);
   transition: transform 0.2s ease;
 }
 
