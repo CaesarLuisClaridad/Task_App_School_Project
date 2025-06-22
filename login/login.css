@@ -117,7 +117,7 @@ form p span {
   margin-top: 1rem;
 }
 
-.btn button {
+.btn input {
   width: 100%;
   padding: 15px;
   border-radius: 15px;
@@ -130,7 +130,7 @@ form p span {
   transition: background 0.3s ease;
 }
 
-.btn button:hover {
+.btn input:hover {
   background-color: #3730a3;
 }
 
