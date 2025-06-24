@@ -1,15 +1,18 @@
 <?php
 session_start();
+
+// Redirect to login if not logged in
 if (!isset($_SESSION['user_id'])) {
-  header('Location: ../login/login.php');
+  header("Location: ../login/login.php");
   exit();
 }
 
 require '../config/db.php';
+
 $user_id = $_SESSION['user_id'];
 
 // Add Task
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['task'])) {
+if (isset($_POST['task'])) {
   $task = $conn->real_escape_string($_POST['task']);
   $conn->query("INSERT INTO tasks (user_id, task) VALUES ($user_id, '$task')");
   header("Location: task.php");
@@ -17,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['task'])) {
 }
 
 // Update Task
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_task_id'])) {
+if (isset($_POST['update_task_id'])) {
   $id = (int) $_POST['update_task_id'];
   $updated = $conn->real_escape_string($_POST['updated_task']);
   $conn->query("UPDATE tasks SET task = '$updated' WHERE id = $id AND user_id = $user_id");
@@ -47,6 +50,7 @@ if (isset($_GET['logout'])) {
   exit();
 }
 
+// Get tasks for current user
 $tasks = $conn->query("SELECT * FROM tasks WHERE user_id = $user_id ORDER BY id DESC");
 $task_count = $tasks->num_rows;
 ?>

@@ -2,39 +2,41 @@
 session_start();
 require_once "../config/db.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
+$error = "";
 
-    if ($username && $password) {
-        $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $stmt->store_result();
+// When form is submitted
+if (isset($_POST['username']) && isset($_POST['password'])) {
+  $username = $_POST['username'];
+  $password = $_POST['password'];
 
-        if ($stmt->num_rows === 1) {
-            $stmt->bind_result($user_id, $hashed_password);
-            $stmt->fetch();
+  // Check if user exists
+  $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
+  $stmt->bind_param("s", $username);
+  $stmt->execute();
+  $stmt->store_result();
 
-            if (password_verify($password, $hashed_password)) {
-                $_SESSION["user_id"] = $user_id;
-                $_SESSION["username"] = $username;
-                header("Location: ../dashboard/task.php");
-                exit();
-            } else {
-                $error = "Incorrect password.";
-            }
-        } else {
-            $error = "Username not found.";
-        }
-        $stmt->close();
+  if ($stmt->num_rows === 1) {
+    $stmt->bind_result($user_id, $hashed_password);
+    $stmt->fetch();
+
+    // Check if password is correct
+    if (password_verify($password, $hashed_password)) {
+      $_SESSION['user_id'] = $user_id;
+      $_SESSION['username'] = $username;
+      header("Location: ../dashboard/task.php");
+      exit();
     } else {
-        $error = "All fields are required.";
+      $error = "Wrong password.";
     }
+  } else {
+    $error = "Username not found.";
+  }
+
+  $stmt->close();
 }
 ?>
 
-<!-- HTML PART BELOW -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

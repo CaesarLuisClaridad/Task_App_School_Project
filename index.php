@@ -1,9 +1,13 @@
 <?php
 // index.php
+
 session_start();
-if (isset($_SESSION['user_id'])) {
+
+// Redirect user based on login status
+if (!empty($_SESSION['user_id'])) {
     header("Location: dashboard/task.php");
 } else {
-    header("Location: login/login.html");
+    header("Location: login/login.php"); 
 }
+
 exit();

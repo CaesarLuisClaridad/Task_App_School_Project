@@ -1,40 +1,42 @@
 <?php
 require_once "../config/db.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $username = trim($_POST["username"]);
-  $password = trim($_POST["password"]);
-  $confirm_password = trim($_POST["confirm_password"]);
+$error = "";
 
-  if ($username && $password && $confirm_password) {
-    if ($password !== $confirm_password) {
-      $error = "Passwords do not match!";
-    } else {
-      // Check if username already exists
-      $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
-      $stmt->bind_param("s", $username);
-      $stmt->execute();
-      $stmt->store_result();
+// When form is submitted
+if (isset($_POST["username"], $_POST["password"], $_POST["confirm_password"])) {
+  $username = $_POST["username"];
+  $password = $_POST["password"];
+  $confirm_password = $_POST["confirm_password"];
 
-      if ($stmt->num_rows > 0) {
-        $error = "Username already taken!";
-      } else {
-        // Insert new user
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $insert = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-        $insert->bind_param("ss", $username, $hashed_password);
-        if ($insert->execute()) {
-          header("Location: ../login/login.php?success=registered");
-          exit();
-        } else {
-          $error = "Registration failed.";
-        }
-        $insert->close();
-      }
-      $stmt->close();
-    }
+  if ($password !== $confirm_password) {
+    $error = "Passwords do not match!";
   } else {
-    $error = "All fields are required!";
+    // Check if username exists
+    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+      $error = "Username already taken!";
+    } else {
+      // Create new user
+      $hashed = password_hash($password, PASSWORD_DEFAULT);
+      $insert = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+      $insert->bind_param("ss", $username, $hashed);
+
+      if ($insert->execute()) {
+        header("Location: ../login/login.php?success=registered");
+        exit();
+      } else {
+        $error = "Registration failed.";
+      }
+
+      $insert->close();
+    }
+
+    $stmt->close();
   }
 }
 ?>
