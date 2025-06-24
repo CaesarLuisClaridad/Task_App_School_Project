@@ -137,7 +137,24 @@ form p span {
 
 .list {
   margin-top: 1.5rem;
+  max-height: 300px; 
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
+
+.list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: rgba(79, 70, 229, 0.5);
+  border-radius: 6px;
+}
+
 
 .task {
   display: flex;
@@ -283,16 +300,120 @@ form p span {
 
 
 
-@media screen and (max-width: 480px) {
-  .form-container {
+@media screen and (max-width: 768px) {
+  .glass-card {
     padding: 1.5rem 1rem 2rem;
+    max-width: 90%;
   }
 
-  .input input {
+  form h2 {
+    font-size: 1.8rem;
+  }
+
+  form p {
     font-size: 0.95rem;
   }
 
-  .btn button {
+  .input {
+    padding: 0.5rem 0.8rem;
+  }
+
+  .input input {
+    font-size: 1rem;
+  }
+
+  .input i,
+  .input button i {
+    font-size: 1rem;
+  }
+
+  .task {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .actions {
+    align-self: flex-end;
+  }
+
+  .clr-btn .clear {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .task-count p {
+    font-size: 1.1rem;
+  }
+
+  .login-icon {
+    top: 20px;
+    right: 20px;
+  }
+
+  .login-icon a {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .main-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .glass-card {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  form h2 {
+    font-size: 1.5rem;
+  }
+
+  form p {
+    font-size: 0.85rem;
+  }
+
+  .input {
+    flex-direction: row;
+    padding: 0.5rem;
+  }
+
+  .input input {
+    font-size: 0.9rem;
+  }
+
+  .actions i {
+    padding: 6px;
+    font-size: 0.9rem;
+  }
+
+  .confirm-btn {
+    padding: 5px 8px;
+    font-size: 0.85rem;
+  }
+
+  .task-count p {
+    font-size: 1rem;
+  }
+
+  .clr-btn .clear {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .login-icon {
+    top: 15px;
+    right: 15px;
+  }
+
+  .login-icon a {
+    width: 35px;
+    height: 35px;
     font-size: 1rem;
   }
 }
+
