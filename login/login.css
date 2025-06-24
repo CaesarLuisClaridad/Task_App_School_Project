@@ -1,7 +1,7 @@
 :root {
   --primary-color: #4f46e5;
   --bg-color: #f9fafb;
-  --form-color: rgba(255, 255, 255, 0.85); /* translucent for glass effect */
+  --form-color: rgba(255, 255, 255, 0.85); 
   --input-bg: #eef2ff;
   --task-bg: #ffffff;
   --border-color: #e5e7eb;
@@ -109,7 +109,7 @@ form p span {
   outline: none;
   background-color: var(--input-bg);
   border: 1px solid var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3), 0 4px 8px rgba(0, 0, 0, 0.15); /* updated */
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3), 0 4px 8px rgba(0, 0, 0, 0.15); 
 }
 
 
