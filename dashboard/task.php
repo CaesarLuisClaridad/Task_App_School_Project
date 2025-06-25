@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 // Redirect to login if not logged in
@@ -7,8 +8,11 @@ if (!isset($_SESSION['user_id'])) {
   exit();
 }
 
+// this includes the db connection file
 require '../config/db.php';
 
+// save the userID from session to local variable
+// para makuha yung task na crineate ng user 
 $user_id = $_SESSION['user_id'];
 
 // Add Task
@@ -37,6 +41,7 @@ if (isset($_GET['delete'])) {
 }
 
 // Clear All Tasks
+// if clear=1 delete all task of the current user
 if (isset($_GET['clear'])) {
   $conn->query("DELETE FROM tasks WHERE user_id = $user_id");
   header("Location: task.php");
@@ -44,6 +49,7 @@ if (isset($_GET['clear'])) {
 }
 
 // Logout
+// if logout=1 destroy the session
 if (isset($_GET['logout'])) {
   session_destroy();
   header("Location: ../login/login.php");
@@ -103,7 +109,7 @@ $task_count = $tasks->num_rows;
           </div>
         <?php endwhile; ?>
       </div>
-
+      
       <div class="clr-btn">
         <a href="?clear=1">
           <button class="clear">Clear Task</button>
